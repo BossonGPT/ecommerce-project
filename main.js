@@ -60,18 +60,22 @@ let cart = [];
 // IDEA: make it easy to add and remove from cart and make all the heavy lifting go to calculating the cart
 
 function addToCart(cart, item) {
+  //add just the name of the item
   console.log(`\n${item} added!`);
   cart.push(item);
 }
 
 function removeFromCart(cart, item) {
+  // remove item
   console.log(`\n${item} removed!`);
-  cart.splice(cart.indexOf(item), 1); // pop doesnt take in an arguement fix ts
+  cart.splice(cart.indexOf(item), 1);
 }
 
 function showFilters(products) {
   let filters = [];
   console.log("\n\nFilters=============");
+
+  // for each item, if the filters array doesn't have the item's type, add the item type
   products.forEach(function (item) {
     if (!filters.includes(item.type)) {
       console.log(item.type);
@@ -83,6 +87,8 @@ function showFilters(products) {
 function viewCartAndTotal(cart, products) {
   console.log("\n\n\nCart=============");
   let total = 0;
+  // for each item in the cart, look through the products array and find the item.
+  // add its price to the total
   cart.forEach((item) => {
     const product = products.find((x) => item == x.name);
     console.log(product.name + " $" + String(product.price));
@@ -108,6 +114,7 @@ function renderProducts(products, filter) {
 renderProducts(productsArray);
 addToCart(cart, "Gubby");
 addToCart(cart, "Tralaleo Tralala");
+addToCart(cart, "Justin Lin");
 addToCart(cart, "Justin Lin");
 removeFromCart(cart, "Tralaleo Tralala");
 
