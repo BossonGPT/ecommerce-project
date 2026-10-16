@@ -57,6 +57,8 @@ const productsArray = [
 
 let cart = [];
 
+// IDEA: make it easy to add and remove from cart and make all the heavy lifting go to calculating the cart
+
 function addToCart(cart, item) {
   console.log(`\n${item} added!`);
   cart.push(item);
@@ -69,7 +71,7 @@ function removeFromCart(cart, item) {
 
 function showFilters(products) {
   let filters = [];
-  console.log("\n\nFilters========");
+  console.log("\n\nFilters=============");
   products.forEach(function (item) {
     if (!filters.includes(item.type)) {
       console.log(item.type);
@@ -83,22 +85,22 @@ function viewCartAndTotal(cart, products) {
   let total = 0;
   cart.forEach((item) => {
     const product = products.find((x) => item == x.name);
-    console.log(product.name + "-- $" + String(product.price));
+    console.log(product.name + " $" + String(product.price));
     total += product.price;
   });
   console.log("\nTOTAL:\n$" + String(total));
 }
 
 function renderProducts(products, filter) {
-  console.log("\n\n\nPRODUCTS=========");
+  console.log("\n\n\nPRODUCTS=============");
 
   products.forEach(function (item) {
     if (filter) {
       if (item.type == filter) {
-        console.log(item.name + "-- $" + String(item.price));
+        console.log(item.name + " $" + String(item.price));
       }
     } else {
-      console.log(item.name + "-- $" + String(item.price));
+      console.log(item.name + " $" + String(item.price));
     }
   });
 }
