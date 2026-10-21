@@ -1,31 +1,4 @@
-const products = {
-  // object of product name, price, and type
-  Gubby: { price: 67, type: "Gubby" },
-  Gooby: { price: 41, type: "Gubby" },
-  Goby: { price: 61, type: "Gubby" },
-  FairsGooby: { price: 1000, type: "Gubby" },
-  "Tung Tung Tung Sahur": { price: 420, type: "Italian Brainrot" },
-  "Tralaleo Tralala": { price: 620, type: "Italian Brainrot" },
-  "Mr Whalen 1": { price: 1, type: "Whalen" },
-  "Mr Whalen 2": { price: 2, type: "Whalen" },
-  "Mr Whalen 3": { price: 3, type: "Whalen" },
-  "Mr Whalen 4": { price: 4, type: "Whalen" },
-  "Mr Whalen 5": { price: 5, type: "Whalen" },
-  "Justin Lin": { price: 100000000000000000009999999999991, type: "Justin" },
-  "Other Justin": { price: 100000, type: "Justin" },
-  "Justin Choy": { price: 6767, type: "Justin" },
-  Sasuke: { price: 25, type: "Tuff" },
-  "BP Ronaldo": { price: 52, type: "BP" },
-  Monarchy: { price: 20, type: "Politics" },
-  Capitalism: { price: 16, type: "Politics" },
-  "Bob Ross": { price: 894, type: "Tuff" },
-  Gum: { price: 100000, type: "Stuff" },
-  Gas: { price: 1000000000, type: "Stuff" },
-  "Bugging Guy": { price: 1023, type: "Tuff" },
-  "Nintendo is Epic": { price: 3434, type: "Not Tuff" },
-};
-
-const productsArray = [
+const products = [
   { name: "Gubby", price: 67, type: "Gubby", image: "", stock: 10 },
   { name: "Gooby", price: 41, type: "Gubby", image: "", stock: 10 },
   { name: "Goby", price: 61, type: "Gubby", image: "", stock: 10 },
@@ -72,8 +45,10 @@ const productsArray = [
   },
 ];
 
+const initialNumberOfKeysInCart = 2;
 let cart = {
   total: 0,
+  codes: [],
 };
 
 const codes = {
@@ -82,24 +57,35 @@ const codes = {
   VERITY40: 40,
 };
 
-function checkAndApplyDiscountCodes(cart, code) {
+function redeemCode(cart, code) {
   if (codes[code]) {
-    console.log("\nYayayay Code");
-    cart.total = cart.total - codes[code];
+    console.log(`\nCode Redeemed: -$${codes[code]}`);
+    cart.codes.push(code);
   } else {
-    console.log("\nBooo no code");
+    console.log("\nINVALID CODE");
   }
 }
 
 // IDEA: make it easy to add and remove from cart and make all the heavy lifting go to calculating the cart
 
-function findItemFromString(product, item) {
+function findItemFromString(products, item) {
   const product = products.find((x) => x.name == item);
   return product;
 }
 
 function addToCart(cart, products, item) {
   const product = findItemFromString(products, item);
+
+  if (!product) {
+    console.log(`${item} does not exist`);
+    return;
+  }
+
+  if (product.stock <= 0) {
+    console.log(`Can't add ${item} to cart sorry!`);
+    return;
+  }
+
   product.stock -= 1;
 
   //add just the name of the item
@@ -139,7 +125,27 @@ function showFilters(products) {
   });
 }
 
-function showTotal(cart) {
+function calculateTotal(cart, products) {
+  cart.total = 0;
+  const cartKeys = Object.keys(cart);
+
+  for (let index = initialNumberOfKeysInCart; index < cartKeys.length; index++) {
+    const item = cartKeys[index];
+    const quantity = cart[item];
+    const product = findItemFromString(products, item);
+
+    cart.total += product.price * quantity;
+  }
+
+  for (let index = 0; index < cart.codes.length; index++) {
+    const code = cart.codes[index];
+    const codeValue = codes[code];
+    cart.total -= codeValue;
+  }
+}
+
+function viewAndCalculateTotal(cart, products) {
+  calculateTotal(cart, products);
   console.log("\nTOTAL:\n$" + String(cart.total));
 }
 
@@ -147,16 +153,14 @@ function viewCart(cart, products) {
   console.log("\n\n\nCart=============");
   // for each item in the cart, look through the products array and find the item.
   // add its price to the total
-  cart.total = 0;
   const cartKeys = Object.keys(cart);
 
-  for (let index = 1; index < cartKeys.length; index++) {
+  for (let index = initialNumberOfKeysInCart; index < cartKeys.length; index++) {
     const item = cartKeys[index];
     const quantity = cart[item];
     const product = findItemFromString(products, item);
 
     console.log(item + " x" + String(quantity) + " $" + String(product.price));
-    cart.total += product.price * quantity;
   }
 
   /*cart.forEach((item) => {
@@ -165,6 +169,34 @@ function viewCart(cart, products) {
     total += product.price;
   });
   console.log("\nTOTAL:\n$" + String(total));*/
+}
+
+function showReciept(cart, products, codes) {
+  console.log("\nCart=============");
+  const cartKeys = Object.keys(cart);
+
+  cart.total = 0;
+
+  for (let index = initialNumberOfKeysInCart; index < cartKeys.length; index++) {
+    const item = cartKeys[index];
+    const quantity = cart[item];
+    const product = findItemFromString(products, item);
+
+    console.log(item + " x" + String(quantity) + " $" + String(product.price));
+
+    cart.total += product.price * quantity;
+  }
+
+  console.log("");
+
+  for (let index = 0; index < cart.codes.length; index++) {
+    const code = cart.codes[index];
+    const codeValue = codes[code];
+    console.log(code + " -$" + String(codeValue));
+    cart.total -= codeValue;
+  }
+
+  console.log("\nTOTAL:\n$" + String(cart.total));
 }
 
 function renderProducts(products, filter) {
@@ -181,16 +213,17 @@ function renderProducts(products, filter) {
   });
 }
 
-renderProducts(productsArray);
-addToCart(cart, products, "Gubby");
-addToCart(cart, products, "Tralaleo Tralala");
-addToCart(cart, products, "Justin Lin");
-addToCart(cart, products, "Justin Lin");
-removeFromCart(cart, products, "Justin Lin");
-removeFromCart(cart, products, "Justin Lin");
+//renderProducts(products);
+addToCart(cart, products, "Justin Choy");
+addToCart(cart, products, "Monarchy");
+addToCart(cart, products, "Monarchy");
 
-showFilters(productsArray);
-viewCart(cart, productsArray);
-showTotal(cart);
-checkAndApplyDiscountCodes(cart, "CHINGDATMANDEMSTYLE");
-showTotal(cart);
+viewCart(cart, products);
+viewAndCalculateTotal(cart, products);
+
+redeemCode(cart, "OBSESSIONDANCE");
+redeemCode(cart, "CHINGDATMANDEMSTYLE");
+
+viewAndCalculateTotal(cart, products);
+
+showReciept(cart, products, codes);
