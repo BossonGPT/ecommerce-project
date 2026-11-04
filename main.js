@@ -129,7 +129,11 @@ function calculateTotal(cart, products) {
   cart.total = 0;
   const cartKeys = Object.keys(cart);
 
-  for (let index = initialNumberOfKeysInCart; index < cartKeys.length; index++) {
+  for (
+    let index = initialNumberOfKeysInCart;
+    index < cartKeys.length;
+    index++
+  ) {
     const item = cartKeys[index];
     const quantity = cart[item];
     const product = findItemFromString(products, item);
@@ -155,7 +159,11 @@ function viewCart(cart, products) {
   // add its price to the total
   const cartKeys = Object.keys(cart);
 
-  for (let index = initialNumberOfKeysInCart; index < cartKeys.length; index++) {
+  for (
+    let index = initialNumberOfKeysInCart;
+    index < cartKeys.length;
+    index++
+  ) {
     const item = cartKeys[index];
     const quantity = cart[item];
     const product = findItemFromString(products, item);
@@ -177,7 +185,11 @@ function showReciept(cart, products, codes) {
 
   cart.total = 0;
 
-  for (let index = initialNumberOfKeysInCart; index < cartKeys.length; index++) {
+  for (
+    let index = initialNumberOfKeysInCart;
+    index < cartKeys.length;
+    index++
+  ) {
     const item = cartKeys[index];
     const quantity = cart[item];
     const product = findItemFromString(products, item);
@@ -213,17 +225,14 @@ function renderProducts(products, filter) {
   });
 }
 
-//renderProducts(products);
-addToCart(cart, products, "Justin Choy");
-addToCart(cart, products, "Monarchy");
-addToCart(cart, products, "Monarchy");
+//html timeee
+function addItemsHTML(items, filter) {
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    console.log(item);
+  }
+}
 
-viewCart(cart, products);
-viewAndCalculateTotal(cart, products);
+console.log(products);
 
-redeemCode(cart, "OBSESSIONDANCE");
-redeemCode(cart, "CHINGDATMANDEMSTYLE");
-
-viewAndCalculateTotal(cart, products);
-
-showReciept(cart, products, codes);
+addItemsHTML(products);
