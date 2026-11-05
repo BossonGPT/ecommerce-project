@@ -1,8 +1,32 @@
 const products = [
-  { name: "Gubby", price: 67, type: "Gubby", image: "", stock: 10 },
-  { name: "Gooby", price: 41, type: "Gubby", image: "", stock: 10 },
-  { name: "Goby", price: 61, type: "Gubby", image: "", stock: 10 },
-  { name: "Fairs Gooby", price: 1000, type: "Gubby", image: "", stock: 10 },
+  {
+    name: "Gubby",
+    price: 67,
+    type: "Gubby",
+    image: "images/gubby.png",
+    stock: 10,
+  },
+  {
+    name: "Gooby",
+    price: 41,
+    type: "Gubby",
+    image: "images/gooby.jpg",
+    stock: 10,
+  },
+  {
+    name: "Goby",
+    price: 61,
+    type: "Gubby",
+    image: "images/goby.png",
+    stock: 10,
+  },
+  {
+    name: "Fairs Gooby",
+    price: 1000,
+    type: "Gubby",
+    image: "images/fairsGooby.jpg",
+    stock: 10,
+  },
   {
     name: "Tung Tung Tung Sahur",
     price: 420,
@@ -17,10 +41,34 @@ const products = [
     image: "",
     stock: 10,
   },
-  { name: "Mr Whalen 1", price: 1, type: "Whalen", image: "", stock: 10 },
-  { name: "Mr Whalen 2", price: 2, type: "Whalen", image: "", stock: 10 },
-  { name: "Mr Whalen 3", price: 3, type: "Whalen", image: "", stock: 10 },
-  { name: "Mr Whalen 4", price: 4, type: "Whalen", image: "", stock: 10 },
+  {
+    name: "Mr Whalen 1",
+    price: 1,
+    type: "Whalen",
+    image: "images/whalen1.jpg",
+    stock: 10,
+  },
+  {
+    name: "Mr Whalen 2",
+    price: 2,
+    type: "Whalen",
+    image: "images/whalen2.jpg",
+    stock: 10,
+  },
+  {
+    name: "Mr Whalen 3",
+    price: 3,
+    type: "Whalen",
+    image: "images/whalen3.png",
+    stock: 10,
+  },
+  {
+    name: "Mr Whalen 4",
+    price: 4,
+    type: "Whalen",
+    image: "images/woodWhalen.jpg",
+    stock: 10,
+  },
   {
     name: "Justin Lin",
     price: 100000000000000000009999999999991,
@@ -30,17 +78,35 @@ const products = [
   },
   { name: "Other Justin", price: 100000, type: "Justin", image: "", stock: 10 },
   { name: "Justin Choy", price: 6767, type: "Justin", image: "", stock: 10 },
-  { name: "Sasuke", price: 25, type: "Tuff", image: "", stock: 10 },
-  { name: "BP Ronaldo", price: 52, type: "BP", image: "", stock: 10 },
+  {
+    name: "Sasuke",
+    price: 25,
+    type: "Tuff",
+    image: "images/sasuke-ching-dat-mandem-style.gif",
+    stock: 10,
+  },
+  {
+    name: "BP Ronaldo",
+    price: 52,
+    type: "BP",
+    image: "images/cristiano-ronaldo-ronaldo.gif",
+    stock: 10,
+  },
   { name: "Monarchy", price: 20, type: "Politics", image: "", stock: 10 },
   { name: "Gum", price: 100000, type: "Stuff", image: "", stock: 10 },
   { name: "Gas", price: 1000000000, type: "Stuff", image: "", stock: 10 },
-  { name: "Bugging Guy", price: 1023, type: "Tuff", image: "", stock: 10 },
+  {
+    name: "Bugging Guy",
+    price: 1023,
+    type: "Tuff",
+    image: "images/b-b-buggin.jpg",
+    stock: 10,
+  },
   {
     name: "Nintendo is Epic",
     price: 3434,
     type: "Not Tuff",
-    image: "",
+    image: "images/nintendo-is-epic-pc-sucks.gif",
     stock: 10,
   },
 ];
@@ -226,10 +292,24 @@ function renderProducts(products, filter) {
 }
 
 //html timeee
+
 function addItemsHTML(items, filter) {
+  const productsContainer = document.getElementById("Product-Container");
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    console.log(item);
+    console.log(productsContainer, item.name, item.image, item.stock);
+    productsContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="Product">
+            <img src="${item.image}" alt="">
+            <h2>${item.name}</h2>
+            <h3>Type: ${item.type}</h3>
+            <p>Stock: ${item.stock}</p>
+            <button>Buy</button>
+        </div>
+      `,
+    );
   }
 }
 
