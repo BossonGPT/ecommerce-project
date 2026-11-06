@@ -301,13 +301,19 @@ function addItemsHTML(items, filter) {
     productsContainer.insertAdjacentHTML(
       "beforeend",
       `
-        <div class="Product">
-            <img src="${item.image}" alt="">
-            <h2>${item.name}</h2>
-            <h3>Type: ${item.type}</h3>
-            <p>Stock: ${item.stock}</p>
-            <button>Buy</button>
-        </div>
+            <div class="Product">
+                <div class="Product-Text">
+                    <h2>${item.name}</h2>
+                    <h3>Type: ${item.type}</h3>
+
+                    <p>Stock: ${item.stock}</p>
+                    <button>Buy</button>
+
+                </div>
+                <div class="Product-Image">
+                    <img src="${item.image}" alt="">
+                </div>
+            </div>
       `,
     );
   }
