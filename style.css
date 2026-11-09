@@ -5,17 +5,17 @@ head,body,*{
     font-size: 10px;
 }
 
-.Header{
+.header{
     padding: 0 2rem;
     display: flex;
     justify-content: space-between;
 }
 
-.Header h1{
+.header h1{
     font-size: 5rem;
 }
 
-#Cart-Button{
+#cart-button{
     background-color: wheat;
     border-color: transparent;
     font-size: 2rem;
@@ -23,30 +23,30 @@ head,body,*{
 
 }
 
-#Main{
+#main{
     display: flex;
     justify-content: space-evenly;
     padding: 0 2rem;
     background-color: rebeccapurple;
 }
 
-#Filter-Container{
+#filter-container{
     width: auto;
     background-color: blue;
 }
 
-.Filter{
+.filter{
     font-size: 2rem;
 }
 
-#Product-Container{
+#product-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
 }
 
-.Product{
+.product{
     display: flex;
     width: 50rem;
     height: 31rem;
@@ -54,32 +54,50 @@ head,body,*{
     background-color: red;
 }
 
-.Product div{
+.product div{
     width: 50%;
 }
 
-.Product-Text{
+.product-text{
     display: flex;
     flex-direction: column;
     padding: 1rem;
 }
 
-.Product h2{
+.product h2{
     font-size: 3rem;
 }
 
-.Product h3{
+.product h3{
     font-size: 1.5rem;
 }
 
-.Product p{
+.product p{
     margin-top: auto;
     font-size: 3rem;
 }
 
-.Product img{
-    
+.product img{  
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.notification{
+    position: absolute;
+    width: 50rem;
+    height: 10rem;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-image: linear-gradient(rgba(255,255,255,100), rgba(0,0,0,255) );
+ 
+    
+    
+}
+
+.notification p{
+    font-size:5rem;
+    justify-self: center;
 }

@@ -294,23 +294,24 @@ function renderProducts(products, filter) {
 //html timeee
 
 function addItemsHTML(items, filter) {
-  const productsContainer = document.getElementById("Product-Container");
+  const productsContainer = document.getElementById("product-container");
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     console.log(productsContainer, item.name, item.image, item.stock);
     productsContainer.insertAdjacentHTML(
       "beforeend",
       `
-            <div class="Product">
-                <div class="Product-Text">
+            <div class="product">
+                <div class="product-text">
                     <h2>${item.name}</h2>
-                    <h3>Type: ${item.type}</h3>
+                    <h3>$${item.price}</h3>
+                    <h4>Type: ${item.type}</h4>
 
                     <p>Stock: ${item.stock}</p>
-                    <button>Buy</button>
+                    <button class="product-addtocart-button" data-item="${item.name}">Buy</button>
 
                 </div>
-                <div class="Product-Image">
+                <div class="product-image">
                     <img src="${item.image}" alt="">
                 </div>
             </div>
@@ -319,6 +320,13 @@ function addItemsHTML(items, filter) {
   }
 }
 
-console.log(products);
 
 addItemsHTML(products);
+
+const buyButtons = document.getElementsByClassName("product-addtocart-button");
+
+Array.from(buyButtons).forEach((buyButton) => buyButton.addEventListener("click",function(event){
+  addToCart(cart,products,event.target.getAttribute("data-item"));
+  console.log(event.target.getAttribute("data-item"));
+}
+) )
