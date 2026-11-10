@@ -297,7 +297,6 @@ function addItemsHTML(items, filter) {
   const productsContainer = document.getElementById("product-container");
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    console.log(productsContainer, item.name, item.image, item.stock);
     productsContainer.insertAdjacentHTML(
       "beforeend",
       `
@@ -327,6 +326,19 @@ const buyButtons = document.getElementsByClassName("product-addtocart-button");
 
 Array.from(buyButtons).forEach((buyButton) => buyButton.addEventListener("click",function(event){
   addToCart(cart,products,event.target.getAttribute("data-item"));
-  console.log(event.target.getAttribute("data-item"));
+  const body = document.querySelector("body");
+  const id = Date.now();
+  body.insertAdjacentHTML("beforeend",
+    `<div class="notification" id="${id}">
+        <p>${event.target.getAttribute("data-item")} added to cart!</p>
+    </div>`
+  );
+
+  const notification = document.getElementById(String(id));
+  notification.style.transition = `all 2s ease-in 1s`;
+    notification.style.transform = `translate(-50%,-50%)`;
+  notification.style.transform = `translate(-50%,-200%)`;
+  console.log(notification,notification.transform);
+
 }
 ) )
