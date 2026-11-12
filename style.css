@@ -25,25 +25,40 @@ head,body,*{
 
 #main{
     display: flex;
-    justify-content: space-evenly;
     padding: 0 2rem;
     background-color: rebeccapurple;
 }
 
 #filter-container{
-    width: auto;
+    width: 150rem;
     background-color: blue;
+    padding: 2rem 1rem;
+    
+}
+
+#filter-container h2{
+    font-size: 4rem;
+    justify-self: center;
 }
 
 .filter{
-    font-size: 2rem;
+    list-style: none;
+    justify-self: center;
+    margin: 1rem 0;
+}
+
+.filter button{
+    font-size: 3rem;
 }
 
 #product-container{
+    background-color: aqua;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: space-evenly;
+    width: auto;
+    gap: 1rem;
+    padding: 1rem;
 }
 
 .product{
@@ -81,10 +96,11 @@ head,body,*{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 1rem;
 }
 
 .notification{
-    position: absolute;
+    position: fixed;
     width: 50rem;
     height: 10rem;
     top: 10%;
@@ -94,6 +110,7 @@ head,body,*{
     color: antiquewhite;
     
     align-content: center;
+    background-attachment: fixed;
     
 }
 

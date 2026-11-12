@@ -180,15 +180,15 @@ function removeFromCart(cart, products, item) {
 
 function showFilters(products) {
   let filters = [];
-  console.log("\n\nFilters=============");
 
   // for each item, if the filters array doesn't have the item's type, add the item type
   products.forEach(function (item) {
     if (!filters.includes(item.type)) {
-      console.log(item.type);
       filters.push(item.type);
     }
   });
+
+  return filters;
 }
 
 function calculateTotal(cart, products) {
@@ -319,26 +319,47 @@ function addItemsHTML(items, filter) {
   }
 }
 
-
 addItemsHTML(products);
+
+function addFiltersHTML(items) {
+  const filterHTML = `<li class="filter"><button>TralaleoTralala</button></li>`;
+
+  const filters = showFilters(products);
+  const filterList = document.getElementById("filter-list");
+  filters.forEach(
+    (filter) =>
+        filterList.insertAdjacentHTML(
+          "afterbegin",
+          `<li class="filter"><button data-filter="${filter}">${filter}</button></li>`
+        );
+  );
+}
+
+addFiltersHTML(products);
 
 const buyButtons = document.getElementsByClassName("product-addtocart-button");
 
-Array.from(buyButtons).forEach((buyButton) => buyButton.addEventListener("click",function(event){
-  addToCart(cart,products,event.target.getAttribute("data-item"));
-  const body = document.querySelector("body");
-  const id = Date.now();
-  body.insertAdjacentHTML("beforeend",
-    `<div class="notification" id="${id}">
+Array.from(buyButtons).forEach((buyButton) =>
+  buyButton.addEventListener("click", function (event) {
+    addToCart(cart, products, event.target.getAttribute("data-item"));
+    const body = document.querySelector("body");
+    const id = Date.now();
+    body.insertAdjacentHTML(
+      "beforeend",
+      `<div class="notification" id="${id}">
         <p>${event.target.getAttribute("data-item")} added to cart!</p>
-    </div>`
-  );
+    </div>`,
+    );
 
-  const notification = document.getElementById(String(id));
-  notification.style.transition = `all 2s ease-in 1s`;
+    const notification = document.getElementById(String(id));
+    notification.style.transition = `all 0.5s ease-in 0.1s`;
     notification.style.transform = `translate(-50%,-50%)`;
-  notification.style.transform = `translate(-50%,-200%)`;
-  console.log(notification,notification.transform);
+    notification.style.opacity = `100%`;
 
-}
-) )
+    void notification.offsetHeight;
+
+    notification.style.transform = `translate(-50%,-200%)`;
+    notification.style.opacity = `0%`;
+    console.log(notification, notification.transform);
+  }),
+);
