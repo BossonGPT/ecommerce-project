@@ -293,10 +293,43 @@ function renderProducts(products, filter) {
 
 //html timeee
 
+function clearItemsHTML() {
+  const productsContainer = document.getElementById("product-container");
+  productsContainer.replaceChildren();
+}
+
 function addItemsHTML(items, filter) {
   const productsContainer = document.getElementById("product-container");
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
+
+    if (filter) {
+      if (item.type == filter) {
+        productsContainer.insertAdjacentHTML(
+          "beforeend",
+          `
+                <div class="product">
+                    <div class="product-text">
+                        <h2>${item.name}</h2>
+                        <h3>$${item.price}</h3>
+                        <h4>Type: ${item.type}</h4>
+
+                        <p>Stock: ${item.stock}</p>
+                        <button class="product-addtocart-button" data-item="${item.name}">Buy</button>
+
+                    </div>
+                    <div class="product-image">
+                        <img src="${item.image}" alt="">
+                    </div>
+                </div>
+          `,
+        );
+        continue;
+      } else {
+        continue;
+      }
+    }
+
     productsContainer.insertAdjacentHTML(
       "beforeend",
       `
@@ -322,17 +355,34 @@ function addItemsHTML(items, filter) {
 addItemsHTML(products);
 
 function addFiltersHTML(items) {
-  const filterHTML = `<li class="filter"><button>TralaleoTralala</button></li>`;
-
-  const filters = showFilters(products);
+  const filters = showFilters(items);
   const filterList = document.getElementById("filter-list");
-  filters.forEach(
-    (filter) =>
-        filterList.insertAdjacentHTML(
-          "afterbegin",
-          `<li class="filter"><button data-filter="${filter}">${filter}</button></li>`
-        );
-  );
+
+  console.log(filters);
+
+  filters.forEach(function (filter) {
+    console.log("asd");
+    const element = document.createElement("li");
+    element.innerHTML = `<button data-filter="${filter}" data-on="">${filter}</button>`;
+    element.className = "filter";
+    filterList.insertAdjacentElement("afterbegin", element);
+
+    element.addEventListener("click", function (event) {
+      const isOn = Boolean(event.target.getAttribute("data-on"));
+
+      switch (isOn) {
+        case true:
+          event.target.setAttribute("data-on", "");
+          element.style.backgroundColor = "111111";
+
+        case false:
+          event.target.setAttribute("data-on", "true");
+          element.style.backgroundColor = "ffffff";
+      }
+    });
+
+    console.log(element, "hi");
+  });
 }
 
 addFiltersHTML(products);

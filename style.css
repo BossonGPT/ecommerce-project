@@ -30,7 +30,6 @@ head,body,*{
 }
 
 #filter-container{
-    width: 150rem;
     background-color: blue;
     padding: 2rem 1rem;
     
@@ -49,14 +48,15 @@ head,body,*{
 
 .filter button{
     font-size: 3rem;
+    width: 25rem;
 }
 
 #product-container{
+    width: 10000rem;
     background-color: aqua;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    width: auto;
     gap: 1rem;
     padding: 1rem;
 }
