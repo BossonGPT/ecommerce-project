@@ -31,14 +31,14 @@ const products = [
     name: "Tung Tung Tung Sahur",
     price: 420,
     type: "Italian Brainrot",
-    image: "",
+    image: "images/tungtung.png",
     stock: 10,
   },
   {
-    name: "Tralaleo Tralala",
+    name: "Ballerina Cappuccina",
     price: 620,
     type: "Italian Brainrot",
-    image: "",
+    image: "images/Ballerina_Cappuccina.png",
     stock: 10,
   },
   {
@@ -92,8 +92,8 @@ const products = [
     image: "images/cristiano-ronaldo-ronaldo.gif",
     stock: 10,
   },
-  { name: "Monarchy", price: 20, type: "Politics", image: "", stock: 10 },
-  { name: "Gum", price: 100000, type: "Stuff", image: "", stock: 10 },
+  { name: "Monarchy", price: 20, type: "Politics", image: "images/monarchy.jpg", stock: 10 },
+  { name: "Gum", price: 100000, type: "Stuff", image: "images/gum.jpg", stock: 10 },
   { name: "Gas", price: 1000000000, type: "Stuff", image: "", stock: 10 },
   {
     name: "Bugging Guy",
@@ -109,6 +109,48 @@ const products = [
     image: "images/nintendo-is-epic-pc-sucks.gif",
     stock: 10,
   },
+  {
+    name: "Verity",
+    price: 3434,
+    type: "Verity",
+    image: "images/verity.png",
+    stock: 10,
+  },
+  {
+    name: "Lord Verity",
+    price: 3434,
+    type: "Verity",
+    image: "images/lordverity.jpe",
+    stock: 10,
+  },
+  {
+    name: "Married Verity",
+    price: 3434,
+    type: "Verity",
+    image: "images/marriedVerity.png",
+    stock: 10,
+  },
+  {
+    name: "Cruelty",
+    price: 3434,
+    type: "Verity",
+    image: "images/cruelty.png",
+    stock: 10,
+  },
+  {
+    name: "Falsity",
+    price: 3434,
+    type: "Verity",
+    image: "images/falsity.jpe",
+    stock: 10,
+  },
+  {
+    name: "Lovity",
+    price: 3434,
+    type: "Verity",
+    image: "images/lovity.png",
+    stock: 10,
+  }
 ];
 
 const initialNumberOfKeysInCart = 2;
@@ -122,6 +164,9 @@ const codes = {
   OBSESSIONDANCE: 20,
   VERITY40: 40,
 };
+
+let activeFilters = [];
+
 
 function redeemCode(cart, code) {
   if (codes[code]) {
@@ -161,6 +206,8 @@ function addToCart(cart, products, item) {
   } else {
     cart[item] = 1;
   }
+
+  updateProducts();
 }
 
 function removeFromCart(cart, products, item) {
@@ -298,36 +345,75 @@ function clearItemsHTML() {
   productsContainer.replaceChildren();
 }
 
-function addItemsHTML(items, filter) {
+function implementBuyButtonFunction(){
+  const buyButtons = document.getElementsByClassName("product-addtocart-button");
+
+  Array.from(buyButtons).forEach((buyButton) =>
+    buyButton.addEventListener("click", function (event) {
+      addToCart(cart, products, event.target.getAttribute("data-item"));
+      const body = document.querySelector("body");
+      const id = Date.now();
+      body.insertAdjacentHTML(
+        "beforeend",
+        `<div class="notification" id="${id}">
+          <p>${event.target.getAttribute("data-item")} added to cart!</p>
+      </div>`,
+      );
+
+      const notification = document.getElementById(String(id));
+      notification.style.transition = `all 0.5s ease-in 0.1s`;
+      notification.style.transform = `translate(-50%,-50%)`;
+      notification.style.opacity = `100%`;
+
+      void notification.offsetHeight;
+
+      notification.style.transform = `translate(-50%,-200%)`;
+      notification.style.opacity = `0%`;
+      console.log(notification, notification.transform);
+    }),
+  );
+
+}
+
+
+
+function addItemsHTML(items, filter) { // am i the goat or what
   const productsContainer = document.getElementById("product-container");
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
 
     if (filter) {
-      if (item.type == filter) {
-        productsContainer.insertAdjacentHTML(
-          "beforeend",
-          `
-                <div class="product">
-                    <div class="product-text">
-                        <h2>${item.name}</h2>
-                        <h3>$${item.price}</h3>
-                        <h4>Type: ${item.type}</h4>
+      if (filter.length > 0){
+       
+        if (filter.includes(item.type)) { // bruh nesting if statements 😭😭😭😭😭
+          productsContainer.insertAdjacentHTML(
+            "beforeend",
+            `
+                  <div class="product">
+                      <div class="product-text">
+                          <h2>${item.name}</h2>
+                          <h3>$${item.price}</h3>
+                          <h4>Type: ${item.type}</h4>
 
-                        <p>Stock: ${item.stock}</p>
-                        <button class="product-addtocart-button" data-item="${item.name}">Buy</button>
+                          <p>Stock: ${item.stock}</p>
+                          <button class="product-addtocart-button" data-item="${item.name}">Buy</button>
 
-                    </div>
-                    <div class="product-image">
-                        <img src="${item.image}" alt="">
-                    </div>
-                </div>
-          `,
-        );
-        continue;
-      } else {
-        continue;
+                      </div>
+                      <div class="product-image">
+                          <img src="${item.image}" alt="">
+                      </div>
+                  </div>
+            `,
+          );
+          continue;
+        } else {
+          continue;
       }
+
+
+      }
+
+
     }
 
     productsContainer.insertAdjacentHTML(
@@ -350,66 +436,56 @@ function addItemsHTML(items, filter) {
       `,
     );
   }
+
+  implementBuyButtonFunction();
 }
 
-addItemsHTML(products);
+function updateProducts(){
+  clearItemsHTML();
+  addItemsHTML(products,activeFilters);
+}
+
+updateProducts();
 
 function addFiltersHTML(items) {
   const filters = showFilters(items);
   const filterList = document.getElementById("filter-list");
 
-  console.log(filters);
 
   filters.forEach(function (filter) {
-    console.log("asd");
     const element = document.createElement("li");
     element.innerHTML = `<button data-filter="${filter}" data-on="">${filter}</button>`;
     element.className = "filter";
     filterList.insertAdjacentElement("afterbegin", element);
 
+    console.log(element);
     element.addEventListener("click", function (event) {
-      const isOn = Boolean(event.target.getAttribute("data-on"));
+      const isOn = (event.target.getAttribute("data-on") == "true")? true: false;
+      console.log(event.target, isOn);
 
       switch (isOn) {
-        case true:
-          event.target.setAttribute("data-on", "");
-          element.style.backgroundColor = "111111";
+        case true: // will be false
+          event.target.setAttribute("data-on", "false");
+          event.target.style.backgroundColor = "#ffffff";
+          activeFilters = activeFilters.filter((filter) => filter != event.target.getAttribute("data-filter"));
+          break;
 
-        case false:
+        case false: // will be true
           event.target.setAttribute("data-on", "true");
-          element.style.backgroundColor = "ffffff";
+          event.target.style.backgroundColor = "#111111";
+          activeFilters.push(event.target.getAttribute("data-filter"));
+          break;
       }
+
+      clearItemsHTML();
+      updateProducts();
+
     });
 
-    console.log(element, "hi");
+
   });
 }
 
 addFiltersHTML(products);
 
-const buyButtons = document.getElementsByClassName("product-addtocart-button");
 
-Array.from(buyButtons).forEach((buyButton) =>
-  buyButton.addEventListener("click", function (event) {
-    addToCart(cart, products, event.target.getAttribute("data-item"));
-    const body = document.querySelector("body");
-    const id = Date.now();
-    body.insertAdjacentHTML(
-      "beforeend",
-      `<div class="notification" id="${id}">
-        <p>${event.target.getAttribute("data-item")} added to cart!</p>
-    </div>`,
-    );
-
-    const notification = document.getElementById(String(id));
-    notification.style.transition = `all 0.5s ease-in 0.1s`;
-    notification.style.transform = `translate(-50%,-50%)`;
-    notification.style.opacity = `100%`;
-
-    void notification.offsetHeight;
-
-    notification.style.transform = `translate(-50%,-200%)`;
-    notification.style.opacity = `0%`;
-    console.log(notification, notification.transform);
-  }),
-);

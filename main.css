@@ -6,6 +6,10 @@ head,body,*{
 }
 
 .header{
+    font-family: "IBM Plex Serif", serif;
+    font-weight: 100;
+    font-style: normal;
+
     padding: 0 2rem;
     display: flex;
     justify-content: space-between;
@@ -47,6 +51,7 @@ head,body,*{
 }
 
 .filter button{
+    background-color: whitesmoke;
     font-size: 3rem;
     width: 25rem;
 }
