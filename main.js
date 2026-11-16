@@ -92,8 +92,20 @@ const products = [
     image: "images/cristiano-ronaldo-ronaldo.gif",
     stock: 10,
   },
-  { name: "Monarchy", price: 20, type: "Politics", image: "images/monarchy.jpg", stock: 10 },
-  { name: "Gum", price: 100000, type: "Stuff", image: "images/gum.jpg", stock: 10 },
+  {
+    name: "Monarchy",
+    price: 20,
+    type: "Politics",
+    image: "images/monarchy.jpg",
+    stock: 10,
+  },
+  {
+    name: "Gum",
+    price: 100000,
+    type: "Stuff",
+    image: "images/gum.jpg",
+    stock: 10,
+  },
   { name: "Gas", price: 1000000000, type: "Stuff", image: "", stock: 10 },
   {
     name: "Bugging Guy",
@@ -150,7 +162,7 @@ const products = [
     type: "Verity",
     image: "images/lovity.png",
     stock: 10,
-  }
+  },
 ];
 
 const initialNumberOfKeysInCart = 2;
@@ -166,7 +178,6 @@ const codes = {
 };
 
 let activeFilters = [];
-
 
 function redeemCode(cart, code) {
   if (codes[code]) {
@@ -307,6 +318,12 @@ function showReciept(cart, products, codes) {
     const quantity = cart[item];
     const product = findItemFromString(products, item);
 
+    const listElement = document.createElement("li");
+    listElement.textContent = `${item} x${String(quantity)} $${String(product.price)}`;
+    document
+      .getElementById("cart-products")
+      .insertAdjacentElement("afterbegin", element);
+
     console.log(item + " x" + String(quantity) + " $" + String(product.price));
 
     cart.total += product.price * quantity;
@@ -324,7 +341,7 @@ function showReciept(cart, products, codes) {
   console.log("\nTOTAL:\n$" + String(cart.total));
 }
 
-function renderProducts(products, filter) {
+/*function renderProducts(products, filter) {
   console.log("\n\n\nPRODUCTS=============");
 
   products.forEach(function (item) {
@@ -336,7 +353,7 @@ function renderProducts(products, filter) {
       console.log(item.name + " $" + String(item.price));
     }
   });
-}
+}*/
 
 //html timeee
 
@@ -345,8 +362,10 @@ function clearItemsHTML() {
   productsContainer.replaceChildren();
 }
 
-function implementBuyButtonFunction(){
-  const buyButtons = document.getElementsByClassName("product-addtocart-button");
+function implementBuyButtonFunction() {
+  const buyButtons = document.getElementsByClassName(
+    "product-addtocart-button",
+  );
 
   Array.from(buyButtons).forEach((buyButton) =>
     buyButton.addEventListener("click", function (event) {
@@ -372,20 +391,18 @@ function implementBuyButtonFunction(){
       console.log(notification, notification.transform);
     }),
   );
-
 }
 
-
-
-function addItemsHTML(items, filter) { // am i the goat or what
+function addItemsHTML(items, filter) {
+  // am i the goat or what
   const productsContainer = document.getElementById("product-container");
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
 
     if (filter) {
-      if (filter.length > 0){
-       
-        if (filter.includes(item.type)) { // bruh nesting if statements 😭😭😭😭😭
+      if (filter.length > 0) {
+        if (filter.includes(item.type)) {
+          // bruh nesting if statements 😭😭😭😭😭
           productsContainer.insertAdjacentHTML(
             "beforeend",
             `
@@ -408,12 +425,8 @@ function addItemsHTML(items, filter) { // am i the goat or what
           continue;
         } else {
           continue;
+        }
       }
-
-
-      }
-
-
     }
 
     productsContainer.insertAdjacentHTML(
@@ -440,9 +453,9 @@ function addItemsHTML(items, filter) { // am i the goat or what
   implementBuyButtonFunction();
 }
 
-function updateProducts(){
+function updateProducts() {
   clearItemsHTML();
-  addItemsHTML(products,activeFilters);
+  addItemsHTML(products, activeFilters);
 }
 
 updateProducts();
@@ -450,7 +463,6 @@ updateProducts();
 function addFiltersHTML(items) {
   const filters = showFilters(items);
   const filterList = document.getElementById("filter-list");
-
 
   filters.forEach(function (filter) {
     const element = document.createElement("li");
@@ -460,14 +472,17 @@ function addFiltersHTML(items) {
 
     console.log(element);
     element.addEventListener("click", function (event) {
-      const isOn = (event.target.getAttribute("data-on") == "true")? true: false;
+      const isOn =
+        event.target.getAttribute("data-on") == "true" ? true : false;
       console.log(event.target, isOn);
 
       switch (isOn) {
         case true: // will be false
           event.target.setAttribute("data-on", "false");
           event.target.style.backgroundColor = "#ffffff";
-          activeFilters = activeFilters.filter((filter) => filter != event.target.getAttribute("data-filter"));
+          activeFilters = activeFilters.filter(
+            (filter) => filter != event.target.getAttribute("data-filter"),
+          );
           break;
 
         case false: // will be true
@@ -479,13 +494,20 @@ function addFiltersHTML(items) {
 
       clearItemsHTML();
       updateProducts();
-
     });
-
-
   });
 }
 
 addFiltersHTML(products);
 
+document
+  .getElementById("cart-button")
+  .addEventListener("click", function (event) {
+    document.getElementById("cart-container").style.visibility = "visible";
+  });
 
+document
+  .getElementById("cart-exit")
+  .addEventListener("click", function (event) {
+    document.getElementById("cart-container").style.visibility = "hidden";
+  });

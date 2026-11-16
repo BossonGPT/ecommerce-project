@@ -5,22 +5,187 @@ head,body,*{
     font-size: 10px;
 }
 
-.hero{
-    width: 100vw;
-    height: 100vh;
-
-    background-size: 10rem 10rem;
-
-    background-repeat: repeat;
-}
-
-h1{
+#header{
+    position: fixed;
     font-family: "IBM Plex Serif", serif;
     font-weight: 100;
-    font-style: italic;
+    font-style: normal;
 
-    font-size: 10rem;
+    background-color: white;
+    width: 100vw;
     padding: 0 2rem;
     display: flex;
     justify-content: space-between;
+}
+
+#header h1{
+    font-size: 5rem;
+}
+
+#hero{
+    height: 75vh;
+    background-attachment: fixed;
+    background-color: burlywood;
+}
+
+#cart-button{
+    background-color: wheat;
+    border-color: transparent;
+    font-size: 2rem;
+    width: 10rem;
+
+}
+
+#main{
+    display: flex;
+    padding: 0 2rem;
+    background-color: rebeccapurple;
+    height: 80rem;
+}
+
+#filter-container{
+    background-color: blue;
+    padding: 2rem 1rem;
+    
+}
+
+#filter-container h2{
+    font-size: 4rem;
+    justify-self: center;
+}
+
+.filter{
+    list-style: none;
+    justify-self: center;
+    margin: 1rem 0;
+}
+
+.filter button{
+    background-color: whitesmoke;
+    font-size: 3rem;
+    width: 25rem;
+}
+
+#product-container{
+    width: 10000rem;
+    background-color: aqua;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.product{
+    display: flex;
+    width: 50rem;
+    height: 31rem;
+    border-radius: 1rem;
+    background-color: red;
+}
+
+.product div{
+    width: 50%;
+}
+
+.product-text{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.product h2{
+    font-size: 3rem;
+}
+
+.product h3{
+    font-size: 1.5rem;
+}
+
+.product p{
+    margin-top: auto;
+    font-size: 3rem;
+}
+
+.product img{  
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.notification{
+    position: fixed;
+    width: 50rem;
+    height: 10rem;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: 222222;
+    color: antiquewhite;
+    
+    align-content: center;
+    background-attachment: fixed;
+    
+}
+
+.notification p{
+    font-size:5rem;
+    justify-self: center;
+}
+
+#cart-container{
+    visibility:hidden;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0,0,0,0.5);
+}
+
+#cart-body{
+    padding: 2rem;
+    position: fixed;
+    width: 100rem;
+    height: 80rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: whitesmoke;
+}
+
+#cart-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+#cart-header h2{
+    font-size: 4rem;
+}
+
+#cart-exit{
+    background-color: red;
+    width: 5rem;
+    height: 5rem;
+}
+
+#cart{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 75%;
+}
+
+#cart li{
+    font-size: 2rem;
+    list-style: none;
+    margin-left: 1rem;
+}
+
+#cart h3{
+    margin-top: 2rem; 
+    font-size: 2rem;
 }
