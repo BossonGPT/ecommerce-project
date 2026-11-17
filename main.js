@@ -226,14 +226,16 @@ function removeFromCart(cart, products, item) {
   console.log(`\n${item} removed!`);
 
   const product = findItemFromString(products, item);
-  product.stock += 1;
 
   if (cart[item]) {
+    product.stock += 1;
     cart[item] -= 1;
     if (cart[item] <= 0) {
       delete cart[item];
     }
   }
+
+  updateProducts();
 }
 
 function showFilters(products) {
@@ -308,7 +310,6 @@ function updateCart(cart, products, codes) {
   document.getElementById("cart-coupons").replaceChildren();
   document.getElementById("cart-total").textContent = "TOTAL: $--";
 
-
   const cartKeys = Object.keys(cart);
   cart.total = 0;
 
@@ -344,6 +345,10 @@ function updateCart(cart, products, codes) {
       .insertAdjacentElement("afterbegin", codeElement);
 
     cart.total -= codeValue;
+  }
+
+  if (cart.total < 0) {
+    cart.total = 0;
   }
 
   const totalElement = document.getElementById("cart-total");
@@ -402,7 +407,63 @@ function implementBuyButtonFunction() {
   );
 }
 
+function implementSellButtonFunction() {
+  const sellButtons = document.getElementsByClassName(
+    "product-removefromcart-button",
+  );
+
+  Array.from(sellButtons).forEach((sellButton) =>
+    sellButton.addEventListener("click", function (event) {
+      removeFromCart(cart, products, event.target.getAttribute("data-item"));
+      const body = document.querySelector("body");
+      const id = Date.now();
+      body.insertAdjacentHTML(
+        "beforeend",
+        `<div class="notification" id="${id}">
+          <p>${event.target.getAttribute("data-item")} removed from cart!</p>
+      </div>`,
+      );
+
+      const notification = document.getElementById(String(id));
+      notification.style.transition = `all 0.5s ease-in 0.1s`;
+      notification.style.transform = `translate(-50%,-50%)`;
+      notification.style.opacity = `100%`;
+
+      void notification.offsetHeight;
+
+      notification.style.transform = `translate(-50%,-200%)`;
+      notification.style.opacity = `0%`;
+      console.log(notification, notification.transform);
+    }),
+  );
+}
+
 function addItemsHTML(items, filter) {
+  function insertHTML(item) {
+    productsContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+                  <div class="product">
+                      <div class="product-text">
+                          <h2>${item.name}</h2>
+                          <h3>$${item.price}</h3>
+                          <h4>Type: ${item.type}</h4>
+
+                          <p>Stock: ${item.stock}</p>
+                          
+                          <div>
+                            <p><button class="product-removefromcart-button" data-item="${item.name}">-</button> ${cart[item.name] ? cart[item.name] : 0} <button class="product-addtocart-button" data-item="${item.name}">+</button></p>
+                          </div>
+
+                      </div>
+                      <div class="product-image">
+                          <img src="${item.image}" alt="">
+                      </div>
+                  </div>
+            `,
+    );
+  }
+
   // am i the goat or what
   const productsContainer = document.getElementById("product-container");
   for (let i = 0; i < items.length; i++) {
@@ -412,25 +473,7 @@ function addItemsHTML(items, filter) {
       if (filter.length > 0) {
         if (filter.includes(item.type)) {
           // bruh nesting if statements 😭😭😭😭😭
-          productsContainer.insertAdjacentHTML(
-            "beforeend",
-            `
-                  <div class="product">
-                      <div class="product-text">
-                          <h2>${item.name}</h2>
-                          <h3>$${item.price}</h3>
-                          <h4>Type: ${item.type}</h4>
-
-                          <p>Stock: ${item.stock}</p>
-                          <button class="product-addtocart-button" data-item="${item.name}">Buy</button>
-
-                      </div>
-                      <div class="product-image">
-                          <img src="${item.image}" alt="">
-                      </div>
-                  </div>
-            `,
-          );
+          insertHTML(item);
           continue;
         } else {
           continue;
@@ -438,28 +481,11 @@ function addItemsHTML(items, filter) {
       }
     }
 
-    productsContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-            <div class="product">
-                <div class="product-text">
-                    <h2>${item.name}</h2>
-                    <h3>$${item.price}</h3>
-                    <h4>Type: ${item.type}</h4>
-
-                    <p>Stock: ${item.stock}</p>
-                    <button class="product-addtocart-button" data-item="${item.name}">Buy</button>
-
-                </div>
-                <div class="product-image">
-                    <img src="${item.image}" alt="">
-                </div>
-            </div>
-      `,
-    );
+    insertHTML(item);
   }
 
   implementBuyButtonFunction();
+  implementSellButtonFunction();
 }
 
 function updateProducts() {
@@ -509,13 +535,12 @@ function addFiltersHTML(items) {
 
 addFiltersHTML(products);
 
-
 // open cart
 document
   .getElementById("cart-button")
   .addEventListener("click", function (event) {
     document.getElementById("cart-container").style.visibility = "visible";
-    updateCart(cart,products,codes);
+    updateCart(cart, products, codes);
   });
 
 //close cart
@@ -526,11 +551,13 @@ document
   });
 
 //redeem code
-document.getElementById("cart-coupon-redeem-button").addEventListener("click", function(event) {
-  const codeBox = document.getElementById("cart-coupon-redeem-text-box");
-  if (codes[codeBox.value] && !cart.codes.includes(codeBox.value)){
-    cart.codes.push(codeBox.value);
-    updateCart(cart,products,codes);
-  }
-  codeBox.value = "";
-})
+document
+  .getElementById("cart-coupon-redeem-button")
+  .addEventListener("click", function (event) {
+    const codeBox = document.getElementById("cart-coupon-redeem-text-box");
+    if (codes[codeBox.value] && !cart.codes.includes(codeBox.value)) {
+      cart.codes.push(codeBox.value);
+      updateCart(cart, products, codes);
+    }
+    codeBox.value = "";
+  });

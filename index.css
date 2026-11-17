@@ -93,7 +93,7 @@ head,body,*{
     background-color: rgb(247, 242, 226);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    align-content: flex-start;
     gap: 1rem;
     padding: 1rem;
     overflow: auto;
@@ -104,7 +104,8 @@ head,body,*{
     width: 50rem;
     height: 31rem;
     border-radius: 1rem;
-    background-color: red;
+    background-color: rgb(56, 109, 255);
+    color: rgb(247, 242, 226);
 }
 
 .product div{
@@ -137,6 +138,15 @@ head,body,*{
     border-radius: 1rem;
 }
 
+.product div{
+    justify-content: center;
+}
+
+.product button{
+    width: 2rem;
+    height: 2rem;
+}
+
 .notification{
     position: fixed;
     width: 50rem;
@@ -144,16 +154,18 @@ head,body,*{
     top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: 222222;
-    color: antiquewhite;
+    background-color: rgb(255, 130, 217);
+    color: white;
+    border-radius: 1rem;
     
     align-content: center;
-    background-attachment: fixed;
+
+    padding: 1rem;
     
 }
 
 .notification p{
-    font-size:5rem;
+    font-size:3.5rem;
     justify-self: center;
 }
 
