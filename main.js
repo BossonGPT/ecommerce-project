@@ -303,12 +303,16 @@ function viewCart(cart, products) {
   console.log("\nTOTAL:\n$" + String(total));*/
 }
 
-function showReciept(cart, products, codes) {
-  console.log("\nCart=============");
-  const cartKeys = Object.keys(cart);
+function updateCart(cart, products, codes) {
+  document.getElementById("cart-products").replaceChildren();
+  document.getElementById("cart-coupons").replaceChildren();
+  document.getElementById("cart-total").textContent = "TOTAL: $--";
 
+
+  const cartKeys = Object.keys(cart);
   cart.total = 0;
 
+  console.log(cartKeys.length);
   for (
     let index = initialNumberOfKeysInCart;
     index < cartKeys.length;
@@ -318,27 +322,32 @@ function showReciept(cart, products, codes) {
     const quantity = cart[item];
     const product = findItemFromString(products, item);
 
-    const listElement = document.createElement("li");
-    listElement.textContent = `${item} x${String(quantity)} $${String(product.price)}`;
+    const itemElement = document.createElement("li");
+    itemElement.textContent = `${item} x${String(quantity)} $${String(product.price)}`;
     document
       .getElementById("cart-products")
-      .insertAdjacentElement("afterbegin", element);
+      .insertAdjacentElement("afterbegin", itemElement);
 
     console.log(item + " x" + String(quantity) + " $" + String(product.price));
 
     cart.total += product.price * quantity;
   }
 
-  console.log("");
-
   for (let index = 0; index < cart.codes.length; index++) {
     const code = cart.codes[index];
     const codeValue = codes[code];
-    console.log(code + " -$" + String(codeValue));
+
+    const codeElement = document.createElement("li");
+    codeElement.textContent = `${code} -$${String(codeValue)}`;
+    document
+      .getElementById("cart-coupons")
+      .insertAdjacentElement("afterbegin", codeElement);
+
     cart.total -= codeValue;
   }
 
-  console.log("\nTOTAL:\n$" + String(cart.total));
+  const totalElement = document.getElementById("cart-total");
+  totalElement.textContent = `TOTAL: $${cart.total}`;
 }
 
 /*function renderProducts(products, filter) {
@@ -500,14 +509,28 @@ function addFiltersHTML(items) {
 
 addFiltersHTML(products);
 
+
+// open cart
 document
   .getElementById("cart-button")
   .addEventListener("click", function (event) {
     document.getElementById("cart-container").style.visibility = "visible";
+    updateCart(cart,products,codes);
   });
 
+//close cart
 document
   .getElementById("cart-exit")
   .addEventListener("click", function (event) {
     document.getElementById("cart-container").style.visibility = "hidden";
   });
+
+//redeem code
+document.getElementById("cart-coupon-redeem-button").addEventListener("click", function(event) {
+  const codeBox = document.getElementById("cart-coupon-redeem-text-box");
+  if (codes[codeBox.value] && !cart.codes.includes(codeBox.value)){
+    cart.codes.push(codeBox.value);
+    updateCart(cart,products,codes);
+  }
+  codeBox.value = "";
+})
