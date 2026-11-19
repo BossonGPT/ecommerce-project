@@ -34,12 +34,11 @@ head,body,*{
     height: 80rem;
     background-attachment: fixed;
     background-image: linear-gradient(rgb(247, 242, 226),rgb(252, 233, 173));
+    padding-top: 67rem;
+    padding-left: 1rem;
 }
 
 #hero h1{
-    position: absolute;
-    top: 70%;
-    left: 1rem;
     font-size: 10rem;
 
     font-family: "Nunito", sans-serif;
@@ -201,6 +200,7 @@ head,body,*{
 }
 
 #cart-container{
+    z-index: 100;
     visibility:hidden;
     position: fixed;
     width: 100vw;
@@ -219,7 +219,7 @@ head,body,*{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background-color: whitesmoke;
+    background-color: rgb(247, 242, 226);
 }
 
 #cart-header{
@@ -238,10 +238,10 @@ head,body,*{
 }
 
 #cart{
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    height: 75%;
+    height: 85%;
 }
 
 #cart li{
@@ -251,6 +251,44 @@ head,body,*{
 }
 
 #cart h3{
+    display: flex;
+    width: 100%;
     margin-top: 2rem; 
+    font-size: 2rem;
+}
+
+#cart h3::after{
+    content: "----------------------------------------------------------------------------------------------------------------------------------";
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#cart h2{
+    display: flex;
+    width: 100%;
+    margin-top: 2rem; 
+    font-size: 3rem;
+}
+
+#cart h2::after{
+    content: "========================================================================================================================================";
+    font-size: 2rem;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#cart-coupon-redeem{
+    margin-top: 1rem;
+}
+
+#cart-coupon-redeem-text-box{
+    font-size: 2rem;
+}
+
+#cart-coupon-redeem label{
+    font-size: 2rem;
+}
+
+#cart-coupon-redeem-button{
     font-size: 2rem;
 }

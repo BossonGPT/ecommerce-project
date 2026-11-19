@@ -324,7 +324,7 @@ function updateCart(cart, products, codes) {
     const product = findItemFromString(products, item);
 
     const itemElement = document.createElement("li");
-    itemElement.textContent = `${item} x${String(quantity)} $${String(product.price)}`;
+    itemElement.textContent = `${item} x${String(quantity)} $${String(product.price * quantity)}`;
     document
       .getElementById("cart-products")
       .insertAdjacentElement("afterbegin", itemElement);
@@ -402,6 +402,11 @@ function implementBuyButtonFunction() {
 
       notification.style.transform = `translate(-50%,-200%)`;
       notification.style.opacity = `0%`;
+
+      notification.addEventListener("transitionend", function () {
+        notification.remove();
+      });
+
       console.log(notification, notification.transform);
     }),
   );
@@ -433,6 +438,11 @@ function implementSellButtonFunction() {
 
       notification.style.transform = `translate(-50%,-200%)`;
       notification.style.opacity = `0%`;
+
+      notification.addEventListener("transitionend", function () {
+        notification.remove();
+      });
+
       console.log(notification, notification.transform);
     }),
   );
@@ -552,8 +562,9 @@ document
 
 //redeem code
 document
-  .getElementById("cart-coupon-redeem-button")
-  .addEventListener("click", function (event) {
+  .getElementById("cart-coupon-redeem")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
     const codeBox = document.getElementById("cart-coupon-redeem-text-box");
     if (codes[codeBox.value] && !cart.codes.includes(codeBox.value)) {
       cart.codes.push(codeBox.value);
