@@ -225,16 +225,23 @@ head,body,*{
 #cart-header{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 #cart-header h2{
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+
     font-size: 4rem;
 }
 
 #cart-exit{
-    background-color: red;
+    background-color: rgb(255, 124, 157);
     width: 5rem;
     height: 5rem;
+    border-radius: 1rem;
+    font-size: 3rem;
 }
 
 #cart{
@@ -245,41 +252,36 @@ head,body,*{
 }
 
 #cart li{
-    font-size: 2rem;
+    font-size: 1.5rem;
     list-style: none;
     margin-left: 1rem;
 }
 
 #cart h3{
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+
+    font-style: normal;
     display: flex;
     width: 100%;
     margin-top: 2rem; 
     font-size: 2rem;
 }
 
-#cart h3::after{
-    content: "----------------------------------------------------------------------------------------------------------------------------------";
-    white-space: nowrap;
-    overflow-x: hidden;
-}
 
 #cart h2{
+
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+
     display: flex;
     width: 100%;
     margin-top: 2rem; 
-    font-size: 3rem;
-}
-
-#cart h2::after{
-    content: "========================================================================================================================================";
     font-size: 2rem;
-    white-space: nowrap;
-    overflow-x: hidden;
 }
 
-#cart-coupon-redeem{
-    margin-top: 1rem;
-}
 
 #cart-coupon-redeem-text-box{
     font-size: 2rem;
