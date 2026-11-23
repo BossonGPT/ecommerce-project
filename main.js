@@ -76,8 +76,20 @@ const products = [
     image: "images/justinl.png",
     stock: 10,
   },
-  { name: "Other Justin", price: 100000, type: "Justin", image: "images/otherjustin.png", stock: 10 },
-  { name: "Justin Choy", price: 6767, type: "Justin", image: "images/justinbokchoy.png", stock: 10 },
+  {
+    name: "Other Justin",
+    price: 100000,
+    type: "Justin",
+    image: "images/otherjustin.png",
+    stock: 10,
+  },
+  {
+    name: "Justin Choy",
+    price: 6767,
+    type: "Justin",
+    image: "images/justinbokchoy.png",
+    stock: 10,
+  },
   {
     name: "Sasuke",
     price: 25,
@@ -106,7 +118,13 @@ const products = [
     image: "images/gum.jpg",
     stock: 10,
   },
-  { name: "Gas", price: 1000000000, type: "Stuff", image: "images/gas.jpg", stock: 10 },
+  {
+    name: "Gas",
+    price: 1000000000,
+    type: "Stuff",
+    image: "images/gas.jpg",
+    stock: 10,
+  },
   {
     name: "Bugging Guy",
     price: 1023,
